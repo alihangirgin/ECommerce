@@ -1,0 +1,83 @@
+﻿@model ECommerce.Web.DTOs.ProductWithProductCommentAndUserDto
+
+@{
+    ViewData["Title"] = "ProductDetail";
+}
+
+<h1>ProductDetail</h1>
+
+<div>
+    <h4>NewProductVM</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CategoryId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CategoryId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Detail)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Detail)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CoverImage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CoverImage)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Add ProductComment", "NewProductComment", new { productId = Model.Id })
+</p>
+
+<div>
+    @Html.ActionLink("Add ProductImage", "NewProductImage", new { productId = Model.Id })
+</div>
+<div>
+    @Html.ActionLink("Edit", "UpdateProduct", new { id = Model.Id }) |
+    <a asp-action="ProductList">Back to List</a>
+</div>
+
+@if (Model.ProductImages != null)
+{
+    @foreach (var item in Model.ProductImages)
+    {
+        <div>
+            <div><img src="~/ProductImages/@item.FileName" width="100" height="100" /></div>
+            @Html.ActionLink("Delete ProductImage", "DeleteProductImage", new { id = item.Id })
+        </div>
+    }
+}
+
+<h2 class="m-t-40">$@Model.Price</h2>
+<a class="nav-link btn btn-danger text-light mr-2 pull-right" asp-area="" asp-controller="Basket" asp-action="AddBasketProduct" asp-route-productId="@Model.Id">Add to Cart</a>
+
+@if (Model.ProductComments != null)
+{
+    @foreach (var item in Model.ProductComments)
+    {
+        <div>
+            @item.CommentText
+        </div>
+    }
+}
+
+
+
+

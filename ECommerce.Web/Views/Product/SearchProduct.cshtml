@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ECommerce.Web.DTOs.ProductViewModel>
+@{
+    ViewData["Title"] = "SearchProduct";
+}
+
+<h1>SearchProduct</h1>
+
+
+<p>
+    <a asp-action="NewProduct">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoverImage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Detail)
+                </td>
+                <td>
+                    <div><img src="~/ProductImages/@item.CoverImage" width="50" height="50" /></div>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "UpdateProduct", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "ProductDetail", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

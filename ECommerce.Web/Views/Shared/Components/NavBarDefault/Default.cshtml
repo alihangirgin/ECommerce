@@ -1,0 +1,169 @@
+﻿@model ECommerce.Web.DTOs.MainBarViewModel
+@{
+    ViewData["Title"] = "Default";
+}
+
+
+<style type="text/css">
+    @@media all and (min-width: 992px) {
+        .navbar {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+            .navbar .has-megamenu {
+                position: static !important;
+            }
+
+            .navbar .megamenu {
+                left: 0;
+                right: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .navbar .nav-link {
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+            }
+
+
+            .navbar .nav-item .dropdown-menu {
+                display: none;
+            }
+
+            .navbar .nav-item:hover .nav-link {
+                color: #fff;
+            }
+
+            .navbar .nav-item:hover .dropdown-menu {
+                display: block;
+            }
+
+            .navbar .nav-item .dropdown-menu {
+                margin-top: 0;
+            }
+    }
+</style>
+<div class="col-12">
+
+    <div class="col-3">
+        <a href="/Home/Index"> <img src="/Logos/hepsiburada.png" width="100" height="60" class="d-inline-block align-top" alt=""></a>
+    </div>
+
+    <div class="col-3">
+        <form asp-controller="Product" asp-action="SearchProduct" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="form-group col-8">
+                    <label asp-for="SearchText" class="control-label"></label>
+                    <input asp-for="SearchText" class="form-control" />
+                    <span asp-validation-for="SearchText" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-4">
+                    <button type="submit" class="btn btn-primary">Ara</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-3">
+        <ul class="navbar-nav flex">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle btn btn-info text-light mr-2" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Giriş Yap veya Üye Ol
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" asp-controller="Account" asp-action="LoginEmployer">Giriş Yap</a>
+                    <a class="dropdown-item" asp-controller="Account" asp-action="RegisterEmployer">Kayıt Ol</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+    <div class="col-3">
+        <ul class="navbar-nav flex">
+            <li class="nav-item">
+                <a class="nav-link btn btn-danger text-light mr-2" asp-area="" asp-controller="Account" asp-action="LoginEmployee">Sepetim</a>
+            </li>
+
+        </ul>
+    </div>
+
+
+
+</div>
+
+
+
+<div class="container">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+        <div class="collapse navbar-collapse" id="main_nav">
+
+            <ul class="navbar-nav">
+
+                @foreach (var item2 in Model.ProductCategories)
+                {
+                    <li class="nav-item dropdown has-megamenu">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">@item2.CategoryName</a>
+                        <div class="dropdown-menu megamenu" role="menu">
+                            <div class="row">
+
+                                @{
+                                    void PrintCategories(dynamic categories)
+                                    {
+                                        <div class="col-md-3">
+                                            <div class="col-megamenu">
+                                                <ul class="list-unstyled">
+                                                    <li><a href="/ProductCategory/ProductCategoryDetail/@categories.Id">@categories.CategoryName</a></li>
+                                                </ul>
+                                                <ul>
+                                                    @foreach (var item4 in categories.SubCategories)
+                                                    {
+                                                        @*<li><a href="/ProductCategory/ProductCategoryDetail/@item4.Id">@item4.CategoryName</a></li>*@
+                                                        PrintCategories(item4);
+                                                    }
+                                                </ul>
+
+                                            </div> <!-- col-megamenu.// -->
+                                        </div><!-- end col-3 -->
+                                    }
+                                    foreach (var item3 in item2.SubCategories)
+                                    {
+                                        PrintCategories(item3);
+                                    }
+
+                                }
+
+                            </div><!-- end row -->
+                        </div> <!-- dropdown-mega-menu.// -->
+                    </li>
+                }
+
+            </ul>
+
+        </div> <!-- navbar-collapse.// -->
+
+    </nav>
+
+</div><!-- container //  -->
+
+
+<script type="text/javascript">
+    /// some script
+
+    // jquery ready start
+    $(document).ready(function () {
+        // jQuery code
+
+        //////////////////////// Prevent closing from click inside dropdown
+        $(document).on('click', '.dropdown-menu', function (e) {
+            e.stopPropagation();
+        });
+
+
+    }); // jquery end
+</script>

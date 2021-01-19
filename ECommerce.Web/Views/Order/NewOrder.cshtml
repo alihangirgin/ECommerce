@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ECommerce.Web.DTOs.BasketProductWithProductsDto>
+@{
+    ViewData["Title"] = "NewOrder";
+}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9 col-lg-9 col-sm-7">
+                <div class="panel panel-info">
+                    <div class="panel-heading"> Your Cart (@Model.Count() items)</div>
+                    <div class="panel-wrapper collapse in" aria-expanded="true">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table product-overview">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product info</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th style="text-align:center">Total</th>
+                                            <th style="text-align:center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+                                        @foreach (var item in Model)
+                                        {
+
+                                            <tr>
+
+                                                <td width="150"><img src="~/ProductImages/@item.Product.CoverImage" width="50" height="50" /></td>
+                                                <td width="550">
+                                                    <h5 class="font-500">@item.Product.Title</h5>
+                                                </td>
+                                                <td>@item.Product.Price</td>
+                                                <td width="70">
+                                                    <input type="text" class="form-control" placeholder="1">
+                                                </td>
+                                                <td width="150" align="center" class="font-500">$153</td>
+                                                <td align="center"><a href="javascript:void(0)" class="text-inverse" title="" data-toggle="tooltip" data-original-title="Delete"><i class="ti-trash text-dark"></i></a></td>
+
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <hr>
+                                <a class="nav-link btn btn-success text-light mr-2 pull-right" asp-area="" asp-controller="Order" asp-action="Payment">Checkout</a>
+                                <a class="nav-link btn btn-default mr-2" asp-area="" asp-controller="Home" asp-action="Index">Continue shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-3 col-sm-5">
+                <div class="white-box">
+                    <h3 class="box-title">Cart Summary</h3>
+                    <hr> <small>Total Price</small>
+                    <h2>$1</h2>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
